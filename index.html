@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Greeting</title>
+    
+    <!-- Menggunakan Font Lucu dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           WARNA & TEMA DASAR
+           ========================================== */
+        :root {
+            --pink-soft: #ffe6ea;
+            --pink-bold: #ff6b81;
+            --pink-light: #ffb8c6;
+            --yellow-soft: #fff4cc;
+            --text-color: #6d597a;
+            --white-trans: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--pink-soft);
+            color: var(--text-color);
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ==========================================
+           TIPOGRAFI
+           ========================================== */
+        h1, h2, h3 {
+            font-family: 'Baloo 2', cursive;
+            color: var(--pink-bold);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-top: 20px;
+            text-shadow: 2px 2px 0px #fff;
+            animation: bounceIn 1.5s ease;
+        }
+
+        h1 span {
+            font-size: 4.5rem;
+            color: #ff4766;
+            display: inline-block;
+            animation: wiggle 3s infinite;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* ==========================================
+           LAYOUT & KONTEN
+           ========================================== */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: var(--white-trans);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.2);
+            margin-top: 30px;
+            border: 3px dashed var(--pink-light);
+            transform: scale(0.95);
+            animation: popUp 1s forwards 0.5s;
+            opacity: 0;
+        }
+
+        .card p {
+            font-weight: 600;
+        }
+
+        /* ==========================================
+           INTERAKSI KADO (GIFT BOX)
+           ========================================== */
+        .gift-section {
+            margin-top: 50px;
+            text-align: center;
+            animation: popUp 1s forwards 1s;
+            opacity: 0;
+        }
+
+        .gift-emoji {
+            font-size: 100px;
+            cursor: pointer;
+            display: inline-block;
+            animation: shake 2s infinite;
+            transition: transform 0.3s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gift-emoji:hover {
+            transform: scale(1.1);
+        }
+
+        .surprise-content {
+            display: none; /* Disembunyikan sebelum diklik */
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 20px;
+            border: 3px solid var(--yellow-soft);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: zoomIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .surprise-content.show {
+            display: block;
+        }
+
+        .cute-img {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        /* ==========================================
+           ANIMASI & EFEK
+           ========================================== */
+        @keyframes bounceIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            50% { transform: translateY(10px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg) scale(1.05); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(5deg) scale(1.05); }
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(-10deg); }
+            20% { transform: rotate(10deg); }
+            30% { transform: rotate(-10deg); }
+            40% { transform: rotate(10deg); }
+            50% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ==========================================
+           ANIMASI BACKGROUND (BALON & CONFETTI)
+           ========================================== */
+        .balloons-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 45px;
+            height: 60px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: floatUp linear infinite;
+        }
+        
+        .balloon::after {
+            content: "▲";
+            position: absolute;
+            bottom: -12px;
+            left: 16px;
+            font-size: 12px;
+            color: inherit;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-120vh) rotate(20deg); }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            top: -10px;
+            z-index: 5;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1;}
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0;}
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Container Balon Animasi Background -->
+    <div class="balloons-container" id="balloonsContainer"></div>
+
+    <div class="container">
+        <!-- Bagian Header / Judul -->
+        <header>
+            <h1>🎉 Happy Birthday 🎉<br><span>Kak Hanifah!</span> 🎂</h1>
+        </header>
+
+        <!-- Bagian Pesan/Ucapan -->
+        <section class="card">
+            <p>Hai, Kak Hanifah... 🌸🐥</p>
+            <p>Selamat bertambah usia ya! Semoga tahun ini membawa lebih banyak senyuman manis, kebahagiaan yang melimpah, dan semua impian kamu satu per satu bisa terwujud.</p>
+            <p>Tetap jadi Kak Hanifah yang ceria dan selalu bikin orang di sekitarmu bahagia! Jangan lupa makan kue yang banyak hari ini! 🍰✨</p>
+        </section>
+
+        <!-- Bagian Kado Interaktif -->
+        <section class="gift-section">
+            <h2>Coba Klik Kadonya! 👇</h2>
+            <div class="gift-emoji" id="kadoBtn" onclick="bukaKado()">
+                🎁
+            </div>
+
+            <!-- Isi Kejutan di dalam kado -->
+            <div class="surprise-content" id="surpriseBox">
+                <h3>Yeaaay! SURPRISE!</h3>
+                <p>Ini dia kado virtual spesial buat kamu dari Mazaw yg tampan <br><strong>Voucher Pelukan Jauh & Doa Terbaik!</strong> 🥰💖</p>
+                <!-- Gambar lucu menggunakan gif -->
+                <img src="https://cdn.pixabay.com/animation/2022/08/31/08/22/08-22-38-791_512.gif" alt="Cute Hug Animation" class="cute-img">
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript untuk interaksi & efek meriah -->
+    <script>
+        // FUNGSI UNTUK MEMBUKA KADO
+        function bukaKado() {
+            const kado = document.getElementById('kadoBtn');
+            const kejutan = document.getElementById('surpriseBox');
+            
+            // Ubah emoji kado jadi terbuka
+            kado.innerHTML = '🎊';
+            kado.style.animation = 'none'; // Matikan efek getar
+            kado.style.cursor = 'default';
+            
+            // Tampilkan isi kejutan
+            kejutan.classList.add('show');
+
+            // Ledakan Confetti saat kado diklik!
+            buatConfetti(50);
+        }
+
+        // FUNGSI UNTUK MEMBUAT EFEK CONFETTI (KERTAS WARNA-WARNI)
+        function buatConfetti(jumlah) {
+            const colors = ['#ff6b81', '#ffdf85', '#a5ffd6', '#b5d8ff', '#ffb5e8'];
+            for(let i = 0; i < jumlah; i++) {
+                let confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random posisi, warna, dan kecepatan
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's'; // 2s - 5s
+                confetti.style.opacity = Math.random();
+                confetti.style.transform = 'scale(' + (Math.random() * 0.8 + 0.5) + ')';
+                
+                document.body.appendChild(confetti);
+
+                // Hapus confetti dari DOM setelah animasi selesai agar tidak berat
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // FUNGSI UNTUK MEMUNCULKAN BALON BACKGROUND OTOMATIS
+        function buatBalon() {
+            const colors = ['#ff8eaa', '#ffdf85', '#b2d9ff', '#ffb8c6', '#d4c4fb'];
+            const container = document.getElementById('balloonsContainer');
+            
+            // Bikin 15 balon
+            for(let i = 0; i < 15; i++) {
+                let balon = document.createElement('div');
+                balon.classList.add('balloon');
+                
+                // Set warna acak ke background & color (untuk ekor balon)
+                let randomColor = colors[Math.floor(Math.random() * colors.length)];
+                balon.style.backgroundColor = randomColor;
+                balon.style.color = randomColor;
+                
+                // Posisi dan kecepatan acak
+                balon.style.left = (Math.random() * 90 + 5) + 'vw';
+                balon.style.animationDuration = (Math.random() * 10 + 8) + 's'; // 8s - 18s
+                balon.style.animationDelay = (Math.random() * 10) + 's';
+                
+                container.appendChild(balon);
+            }
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        window.onload = () => {
+            buatBalon();
+            // Lempar sedikit confetti saat baru buka halaman
+            setTimeout(() => {
+                buatConfetti(30);
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
