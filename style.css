@@ -1,0 +1,419 @@
+/* ==========================================
+           WARNA & TEMA DASAR
+           ========================================== */
+:root {
+    --pink-soft: #ffe6ea;
+    --pink-bold: #ff6b81;
+    --pink-light: #ffb8c6;
+    --yellow-soft: #fff4cc;
+    --text-color: #6d597a;
+    --white-trans: rgba(255, 255, 255, 0.85);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--pink-soft);
+    color: var(--text-color);
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* ==========================================
+           TIPOGRAFI
+           ========================================== */
+h1,
+h2,
+h3 {
+    font-family: 'Baloo 2', cursive;
+    color: var(--pink-bold);
+    text-align: center;
+}
+
+h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-top: 20px;
+    text-shadow: 2px 2px 0px #fff;
+    animation: bounceIn 1.5s ease;
+}
+
+h1 span {
+    font-size: 4.5rem;
+    color: #ff4766;
+    display: inline-block;
+    animation: wiggle 3s infinite;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* ==========================================
+           LAYOUT & KONTEN
+           ========================================== */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.page-content {
+    display: block;
+}
+
+.page-content.hidden {
+    display: none;
+}
+
+.lock-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #ffe6ea 0%, #ffd7e2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.lock-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.lock-card {
+    width: min(90vw, 420px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid var(--pink-light);
+    border-radius: 25px;
+    box-shadow: 0 12px 30px rgba(255, 107, 129, 0.18);
+    padding: 30px 20px 20px;
+    text-align: center;
+}
+
+.lock-card h2 {
+    margin-bottom: 12px;
+    font-size: 2.1rem;
+}
+
+.lock-card p {
+    margin-bottom: 18px;
+    font-size: 0.96rem;
+}
+
+.pin-display {
+    width: 100%;
+    min-height: 52px;
+    background: #fff6f8;
+    border: 2px solid var(--pink-light);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    font-weight: 800;
+}
+
+.pin-digit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    min-height: 36px;
+    font-size: 2rem;
+    color: var(--pink-bold);
+    letter-spacing: 0;
+    opacity: 0;
+    transform: translateY(10px) scale(0.7);
+    animation: digitIn 0.2s ease forwards;
+}
+
+.pin-digit.empty {
+    color: #f3b4c5;
+    opacity: 0.8;
+    transform: translateY(0) scale(1);
+    animation: none;
+}
+
+@keyframes digitIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.numeric-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.num-btn {
+    border: none;
+    background: var(--pink-soft);
+    color: var(--text-color);
+    border-radius: 14px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 16px 0;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.num-btn:hover {
+    transform: translateY(-2px);
+    background: #ffd9e2;
+}
+
+.num-btn.action {
+    background: #fff0ba;
+}
+
+.num-btn.submit {
+    background: var(--pink-bold);
+    color: white;
+}
+
+.error-msg {
+    min-height: 22px;
+    margin-top: 12px;
+    color: #d94d6c;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.card {
+    background: var(--white-trans);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(255, 107, 129, 0.2);
+    margin-top: 30px;
+    border: 3px dashed var(--pink-light);
+    transform: scale(0.95);
+    animation: popUp 1s forwards 0.5s;
+    opacity: 0;
+}
+
+.card p {
+    font-weight: 600;
+}
+
+/* ==========================================
+           INTERAKSI KADO (GIFT BOX)
+           ========================================== */
+.gift-section {
+    margin-top: 50px;
+    text-align: center;
+    animation: popUp 1s forwards 1s;
+    opacity: 0;
+}
+
+.gift-emoji {
+    font-size: 100px;
+    cursor: pointer;
+    display: inline-block;
+    animation: shake 2s infinite;
+    transition: transform 0.3s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gift-emoji:hover {
+    transform: scale(1.1);
+}
+
+.surprise-content {
+    display: none;
+    /* Disembunyikan sebelum diklik */
+    background: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    border: 3px solid var(--yellow-soft);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    animation: zoomIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.surprise-content.show {
+    display: block;
+}
+
+.cute-img {
+    max-width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+}
+
+/* ==========================================
+           ANIMASI & EFEK
+           ========================================== */
+@keyframes bounceIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateY(10px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-5deg) scale(1.05);
+    }
+
+    50% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    75% {
+        transform: rotate(5deg) scale(1.05);
+    }
+}
+
+@keyframes popUp {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    10% {
+        transform: rotate(-10deg);
+    }
+
+    20% {
+        transform: rotate(10deg);
+    }
+
+    30% {
+        transform: rotate(-10deg);
+    }
+
+    40% {
+        transform: rotate(10deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ==========================================
+           ANIMASI BACKGROUND (BALON & CONFETTI)
+           ========================================== */
+.balloons-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 45px;
+    height: 60px;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: floatUp linear infinite;
+}
+
+.balloon::after {
+    content: "▲";
+    position: absolute;
+    bottom: -12px;
+    left: 16px;
+    font-size: 12px;
+    color: inherit;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-120vh) rotate(20deg);
+    }
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    top: -10px;
+    z-index: 5;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
