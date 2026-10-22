@@ -1,4 +1,4 @@
-const accessCode = '2007';
+const accessCode = '2008';
 const lockScreen = document.getElementById('lockScreen');
 const pageContent = document.getElementById('pageContent');
 const pinDisplay = document.getElementById('pinDisplay');
