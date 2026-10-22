@@ -1,4 +1,4 @@
-const accessCode = '2005';
+const accessCode = '2007';
 const lockScreen = document.getElementById('lockScreen');
 const pageContent = document.getElementById('pageContent');
 const pinDisplay = document.getElementById('pinDisplay');
@@ -66,62 +66,51 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// FUNGSI UNTUK MEMBUKA KADO
 function bukaKado() {
     const kado = document.getElementById('kadoBtn');
     const kejutan = document.getElementById('surpriseBox');
 
-    // Ubah emoji kado jadi terbuka
     kado.innerHTML = '🎊';
-    kado.style.animation = 'none'; // Matikan efek getar
+    kado.style.animation = 'none';
     kado.style.cursor = 'default';
 
-    // Tampilkan isi kejutan
     kejutan.classList.add('show');
 
-    // Ledakan Confetti saat kado diklik!
     buatConfetti(50);
 }
 
-// FUNGSI UNTUK MEMBUAT EFEK CONFETTI (KERTAS WARNA-WARNI)
 function buatConfetti(jumlah) {
     const colors = ['#ff6b81', '#ffdf85', '#a5ffd6', '#b5d8ff', '#ffb5e8'];
     for (let i = 0; i < jumlah; i++) {
         let confetti = document.createElement('div');
         confetti.classList.add('confetti');
 
-        // Random posisi, warna, dan kecepatan
         confetti.style.left = Math.random() * 100 + 'vw';
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's'; // 2s - 5s
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
         confetti.style.opacity = Math.random();
         confetti.style.transform = 'scale(' + (Math.random() * 0.8 + 0.5) + ')';
 
         document.body.appendChild(confetti);
 
-        // Hapus confetti dari DOM setelah animasi selesai agar tidak berat
         setTimeout(() => {
             confetti.remove();
         }, 5000);
     }
 }
 
-// FUNGSI UNTUK MEMUNCULKAN BALON BACKGROUND OTOMATIS
 function buatBalon() {
     const colors = ['#ff8eaa', '#ffdf85', '#b2d9ff', '#ffb8c6', '#d4c4fb'];
     const container = document.getElementById('balloonsContainer');
 
-    // Bikin 15 balon
     for (let i = 0; i < 15; i++) {
         let balon = document.createElement('div');
         balon.classList.add('balloon');
 
-        // Set warna acak ke background & color (untuk ekor balon)
         let randomColor = colors[Math.floor(Math.random() * colors.length)];
         balon.style.backgroundColor = randomColor;
         balon.style.color = randomColor;
 
-        // Posisi dan kecepatan acak
         balon.style.left = (Math.random() * 90 + 5) + 'vw';
         balon.style.animationDuration = (Math.random() * 10 + 8) + 's'; // 8s - 18s
         balon.style.animationDelay = (Math.random() * 10) + 's';
@@ -130,5 +119,4 @@ function buatBalon() {
     }
 }
 
-// tampilkan dulu layar kunci
 updateDisplay();
